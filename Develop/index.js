@@ -1,9 +1,13 @@
 // TODO: Include packages needed for this application
 const fs = require('fs');
 const inquirer = require("inquirer");
+const path = require("path");
+const generateMarkdown = require("./utils/generateMarkdown")
 
-// TODO: Create an array of questions for user input
-const questions = [
+
+// Prompt Questions for README
+const promptUser = [
+    // Name
     {
         type: 'input',
         name: 'name',
@@ -17,6 +21,7 @@ const questions = [
             }
         }
     },
+    // Github Name
     {
         type: 'input',
         name: 'github',
@@ -30,9 +35,10 @@ const questions = [
             }
         }
     },
+    // Project Name
     {
         type: 'input',
-        name: 'projectName',
+        name: 'title',
         message: 'What is the name of the Project? (Required)',
         validate: projectNameInput => {
             if (projectNameInput) {
@@ -43,6 +49,7 @@ const questions = [
             }
         }
     },
+    // Project Description
     {
         type: 'input',
         name: 'description',
@@ -56,12 +63,14 @@ const questions = [
             }
         }
     },
+    // Technologies Used
     {
         type: 'checkbox',
         name: 'languages',
         message: 'What did you this project with? (Check all that apply)',
         choices: ['JavaScript', 'HTML', 'CSS', 'ES6', 'jQuery', 'Bootstrap', 'Node']
     },
+    // Github Link
     {
         type: 'input',
         name: 'link',
@@ -75,6 +84,7 @@ const questions = [
             }
         }
     },
+    // Installation 
     {
         type: 'input',
         name: 'installation',
@@ -88,6 +98,7 @@ const questions = [
             }
         }
     },
+    // Instructions and Examples
     {
         type: 'input',
         name: 'usage',
@@ -101,6 +112,22 @@ const questions = [
             }
         }
     },
+    // Contributions 
+    {
+        type: 'input',
+        name: 'contributors',
+        message: 'Who contributed to this project? (Required)',
+        validate: contributorsInput => {
+            if (contributorsInput) {
+                return true;
+            } else {
+                console.log('Please enter names of contributors!');
+                return false;
+            }
+        }
+    },
+
+    // Licenses
     {
         type: 'checkbox',
         name: 'license',
@@ -114,15 +141,37 @@ const questions = [
                 return false;
             }
         }
-    }
+    },
+    // Email
+    {
+        type: 'input',
+        name: 'email',
+        message: 'What is your email address? (Required)',
+        validate: emailInput => {
+            if (emailInput) {
+                return true;
+            } else {
+                console.log('Please enter your email address!');
+                return false;
+            }
+        }
+    },
 
-];
+]
 
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+// Function to write README file
+function writeToFile(fileName, data) {
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data)
 
-// TODO: Create a function to initialize app
-function init() {}
+}
+
+// Function to initialize app
+function init() {
+    inquirer.prompt(promptUser)
+        .then((inquirerResponses) => {
+            writeToFile("generatedREADME.md", generateMarkdown({ ...inquirerResponses }))
+        })
+}
 
 // Function call to initialize app
 init();
