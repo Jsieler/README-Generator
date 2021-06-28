@@ -4,6 +4,11 @@ const inquirer = require("inquirer");
 const path = require("path");
 const generateMarkdown = require("./utils/generateMarkdown")
 
+console.log(`
+===================================
+Answer Questions to Generate README
+===================================
+`);
 
 // Prompt Questions for README
 const promptUser = [
@@ -142,6 +147,14 @@ const promptUser = [
             }
         }
     },
+
+    // Tests
+    {
+        type: 'input',
+        name: 'test',
+        message: 'Please include test instructions. (Optional)'
+    },
+
     // Email
     {
         type: 'input',
@@ -159,6 +172,7 @@ const promptUser = [
 
 ]
 
+
 // Function to write README file
 function writeToFile(fileName, data) {
     return fs.writeFileSync(path.join(process.cwd(), fileName), data)
@@ -170,6 +184,11 @@ function init() {
     inquirer.prompt(promptUser)
         .then((inquirerResponses) => {
             writeToFile("generatedREADME.md", generateMarkdown({ ...inquirerResponses }))
+            console.log(`
+==============================
+Successfully Generated README!
+==============================
+`);
         })
 }
 

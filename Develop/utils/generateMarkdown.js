@@ -16,7 +16,18 @@ function generateMarkdown(response) {
   # ${response.title}
   ## Description
   * ${response.description}
-  ## Technologies Used
+
+  ## Table of Contents
+  * [Technologies Used](#technologies-used)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [License](#license)
+  * [Contributors](#contributors)
+  * [Tests](#tests)
+  * [Deployed Application](#deployed-application)
+  * [Contact](#contact)
+  * 
+  ## Technologies-Used
   * ${response.languages}
   ## Installation
   * ${response.installation}
@@ -26,11 +37,14 @@ function generateMarkdown(response) {
   * ${response.license}
   ## Contributors
   * ${response.contributors}
-  ## Deployed Application
+  ## Tests
+  * ${response.test}
+  ## Deployed-Application
   * ${response.link}
   ## Contact 
-  * ${response.github}
-  * ${response.email}
+  Email: [${response.email}](mailto:${response.email})
+  </br>
+  GitHub: [${response.github}](https://github.com/${response.github})
 `;
 }
 
